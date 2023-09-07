@@ -1,21 +1,20 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { createContext, useState } from "react";
-import Home from "./pages/Home";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {createContext} from 'react'
 
-export const MyContext = createContext({});
+export const appContext = createContext(0);
 
 function App() {
-  const [id, setId] = useState(0);
+
   return (
-    <MyContext.Provider value={{ id, setId }}>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/myposts" element={<div>about</div>} />
-          <Route path="/create" element={<div>about</div>} />
-        </Routes>
-      </Router>
-    </MyContext.Provider>
+    <appContext.Provider value = {0}>
+    <Router>
+      <Routes>
+        <Route path="/" element={<div>home</div>} />
+        <Route path="/about" element={<div>about</div>} />
+        {/* Add more routes as needed */}
+      </Routes>
+    </Router>
+    </appContext.Provider>
   );
 }
 
