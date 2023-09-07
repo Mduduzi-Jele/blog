@@ -13,7 +13,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/myposts" element={< MyPost/>} />
-          <Route path="/create" element={<div>about</div>} />
         </Routes>
       </Router>
     </MyContext.Provider>
