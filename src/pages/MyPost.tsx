@@ -30,7 +30,7 @@ export const MyPost= () => {
   };
   
   useEffect(() => {
-    const filterKey = '655';
+    const filterKey = '657345';
     loadFilteredUserFromLocalStorage(filterKey);
   }, []);
 
