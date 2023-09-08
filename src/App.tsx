@@ -1,9 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createContext, useState } from "react";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
-
-
 
 export const MyContext = createContext({});
 
@@ -14,7 +11,6 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login/>} />
           <Route path="/myposts" element={<div>about</div>} />
           <Route path="/create" element={<div>about</div>} />
         </Routes>
