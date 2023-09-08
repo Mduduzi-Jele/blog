@@ -11,7 +11,7 @@ const Login: React.FC = () => {
     let matchingKey = null;
   
     for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
+      const key  : string | null= localStorage.key(i);
       const storedValue = localStorage.getItem(key);
   
       if (storedValue) {
@@ -24,7 +24,8 @@ const Login: React.FC = () => {
       }
     }
   
-    if (matchingKey) {      
+    if (matchingKey) {
+      
       setId(matchingKey);
       console.log(matchingKey);
     } else {
