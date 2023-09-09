@@ -11,7 +11,7 @@ interface User {
 interface Post {
   title: string;
   message: string;
-  date: string;
+  dateTime: string;
 }
 
 export const MyPost = () => {
@@ -47,7 +47,7 @@ export const MyPost = () => {
               <li key={index}>
                 <h3>{post.title}</h3>
                 <p>{post.message}</p>
-                <p>Date: {post.date}</p>
+                <p>Date: {post.dateTime}</p>
               </li>
             ))}
           </ul>
