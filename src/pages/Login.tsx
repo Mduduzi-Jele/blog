@@ -1,9 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { MyContext } from "../App";
+import { useNavigate } from 'react-router-dom';
+
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');  
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
   
   const { id, setId } = useContext(MyContext);
 
@@ -28,6 +31,7 @@ const Login: React.FC = () => {
       
       setId(matchingKey);
       console.log(matchingKey);
+      navigate('/')
     } else {
       console.log('No matching key found.');
     }
