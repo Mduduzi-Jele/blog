@@ -15,18 +15,18 @@ function SignUp() {
       name,
       email,
       password,
+      myPosts: []
     };
 
     let id = localStorage.length;
-    let userId = (++id).toString();
+    let userId = id + 1
     
     localStorage.setItem(userId, JSON.stringify(newUser));
-
-    navigate('/');
 
     setName('');
     setEmail('');
     setPassword('');
+    navigate('/');
   }
  
   return (
