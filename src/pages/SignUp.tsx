@@ -1,11 +1,14 @@
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import React, { useContext } from "react";
+import { MyContext } from "../App";
 
 function SignUp() {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const {id, setId} = useContext(MyContext);
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -20,6 +23,8 @@ function SignUp() {
 
     let id = localStorage.length;
     let userId = id + 1
+    
+    setId(userId)
     
     localStorage.setItem(userId, JSON.stringify(newUser));
 
