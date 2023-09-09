@@ -1,40 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { MyContext } from "../App";
 
 interface MyPostProps {}
 
 interface Post {
   title: string;
   message: string;
-  dateTime: string;
+  dateTime: Date;
 }
 
 const Create: React.FC<MyPostProps> = () => {
-  const [firstName, setFirstName] = useState<string>("");
   const [title, setTitle] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
   const [message, setMessage] = useState<string>("");
-  const [dateTime, setDateTime] = useState<string>("");
-
+  
+  const { id } = useContext(MyContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const getCurrentDateTime = (): string => {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, "0");
-      const day = String(now.getDate()).padStart(2, "0");
-      const hours = String(now.getHours()).padStart(2, "0");
-      const minutes = String(now.getMinutes()).padStart(2, "0");
-      const seconds = String(now.getSeconds()).padStart(2, "0");
-      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-    };
-
-    setDateTime(getCurrentDateTime());
-  }, []);
-
   const handlePostData = () => {
-    const existingDataString = localStorage.getItem("data");
+    const existingDataString = localStorage.getItem(id);
     const existingData: {
       firstName: string;
       password: string;
@@ -47,7 +31,7 @@ const Create: React.FC<MyPostProps> = () => {
           myPost: [],
         };
 
-    const newPost: Post = { title, message, dateTime };
+    const newPost: Post = { title, message, dateTime: new Date };
 
     existingData.myPost.push(newPost);
 
@@ -57,34 +41,20 @@ const Create: React.FC<MyPostProps> = () => {
       myPost: existingData.myPost,
     };
 
-    localStorage.setItem("data", JSON.stringify(updatedData));
+    localStorage.setItem(id, JSON.stringify(updatedData));
 
     console.log("Data posted successfully!");
-
-    navigate("/blog");
-
     setFirstName("");
     setPassword("");
     setTitle("");
     setMessage("");
     setDateTime("");
+    navigate("/myposts");
   };
 
   return (
     <div>
       <h1>My Post</h1>
-      <input
-        type="text"
-        placeholder="First Name"
-        value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
       <input
         type="text"
         placeholder="Title"
@@ -96,12 +66,6 @@ const Create: React.FC<MyPostProps> = () => {
         placeholder="Message"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Date"
-        value={dateTime}
-        onChange={(e) => setDateTime(e.target.value)}
       />
       <button onClick={handlePostData}>Submit</button>
     </div>
