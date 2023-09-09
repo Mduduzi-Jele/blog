@@ -1,8 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createContext, useState } from "react";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
 import { MyPost } from "./pages/MyPost";
 import Create from "./pages/Create";
+import SignUp from "./pages/SignUp";
 
 export const MyContext = createContext({});
 
@@ -13,8 +15,10 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/myposts" element={<MyPost />} />
           <Route path="/create" element={<Create />} />
+          <Route path="/login" element={<Login/>} />
+          <Route path="/myposts" element={< MyPost/>} />
+          <Route path="/signup" element={<SignUp />} />
         </Routes>
       </Router>
     </MyContext.Provider>
