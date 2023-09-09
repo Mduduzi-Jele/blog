@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { MyContext } from "../App";
 
@@ -22,33 +22,26 @@ const Create: React.FC<MyPostProps> = () => {
     const existingData: {
       firstName: string;
       password: string;
-      myPost: Post[];
+      myPosts: Post[];
     } = existingDataString
       ? JSON.parse(existingDataString)
       : {
           firstName: "",
           password: "",
-          myPost: [],
+          myPosts: [],
         };
 
     const newPost: Post = { title, message, dateTime: new Date };
 
-    existingData.myPost.push(newPost);
+    existingData.myPosts.push(newPost);
 
-    const updatedData = {
-      firstName,
-      password,
-      myPost: existingData.myPost,
-    };
+    const updatedData = existingData
 
     localStorage.setItem(id, JSON.stringify(updatedData));
 
     console.log("Data posted successfully!");
-    setFirstName("");
-    setPassword("");
     setTitle("");
     setMessage("");
-    setDateTime("");
     navigate("/myposts");
   };
 
