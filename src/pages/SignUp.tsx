@@ -30,7 +30,7 @@ function SignUp() {
     setName('');
     setEmail('');
     setPassword('');
-    navigate('/');
+    navigate('/home');
   }
  
   return (
