@@ -31,7 +31,7 @@ const Login: React.FC = () => {
       
       setId(matchingKey);
       console.log(matchingKey);
-      navigate('/')
+      navigate('/home')
     } else {
       console.log('No matching key found.');
     }
