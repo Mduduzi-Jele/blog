@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { MyContext } from "../App";
-import "./CreatStyle.css";
 
 interface MyPostProps {}
 
