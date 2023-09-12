@@ -13,7 +13,7 @@ interface Post {
 const Create: React.FC<MyPostProps> = () => {
   const [title, setTitle] = useState<string>("");
   const [message, setMessage] = useState<string>("");
-  
+
   const { id } = useContext(MyContext);
   const navigate = useNavigate();
 
@@ -31,11 +31,11 @@ const Create: React.FC<MyPostProps> = () => {
           myPosts: [],
         };
 
-    const newPost: Post = { title, message, dateTime: new Date };
+    const newPost: Post = { title, message, dateTime: new Date() };
 
     existingData.myPosts.push(newPost);
 
-    const updatedData = existingData
+    const updatedData = existingData;
 
     localStorage.setItem(id, JSON.stringify(updatedData));
 
@@ -46,21 +46,42 @@ const Create: React.FC<MyPostProps> = () => {
   };
 
   return (
-    <div>
-      <h1>My Post</h1>
-      <input
-        type="text"
-        placeholder="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Message"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-      />
-      <button onClick={handlePostData}>Submit</button>
+    // <div>
+    //   <h1>My Post</h1>
+    //   <input
+    //     type="text"
+    //     placeholder="Title"
+    //     value={title}
+    //     onChange={(e) => setTitle(e.target.value)}
+    //   />
+    //   <textarea
+    //     type="text"
+    //     placeholder="Message"
+    //     value={message}
+    //     onChange={(e) => setMessage(e.target.value)}
+    //   />
+    //   <button onClick={handlePostData}>Submit</button>
+    // </div>
+    <div className="create-container">
+      <h1>Create Post</h1>
+      <form>
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <textarea
+            placeholder="Message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          ></textarea>
+        </div>
+        <button onClick={handlePostData}>Submit</button>
+      </form>
     </div>
   );
 };
