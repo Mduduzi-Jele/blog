@@ -1,5 +1,8 @@
-import { useEffect, useState, useContext } from "react";
+import{ useEffect, useState , useContext } from 'react';
+import Navigation from './Navigation';
+import {AiOutlineDelete, AiOutlineEdit} from 'react-icons/ai'
 import { MyContext } from "../App";
+
 
 interface User {
   name: string;
@@ -14,11 +17,11 @@ interface Post {
   dateTime: string;
 }
 
-export const MyPost = () => {
+export const MyPost= () => {
   const [user, setUser] = useState<User | null>(null);
   const { id } = useContext(MyContext);
 
-  const loadFilteredUserFromLocalStorage = (filterKey: number) => {
+  const loadFilteredUserFromLocalStorage = (filterKey: string) => {
     const filteredUserJSON = localStorage.getItem(filterKey);
 
     if (filteredUserJSON !== null) {
@@ -28,26 +31,39 @@ export const MyPost = () => {
       setUser(null);
     }
   };
-
+  
   useEffect(() => {
     const filterKey = id;
     loadFilteredUserFromLocalStorage(filterKey);
   }, [id]);
 
   return (
-    <div className="App">
+    <>
+    
+    <Navigation/>
+    <div className="mypost">
       {user ? (
-        <div>
-          <h1>User Information</h1>
-          <p>Name: {user.name}</p>
+        <div className='mypost__wrapper'>
+          {/* <h1>User Information</h1>
+          
           <p>Email: {user.email}</p>
-          <h2>Posts</h2>
-          <ul>
+          <h2>Posts</h2> */}
+          <ul className='mypost__list'>
             {user.myPosts.map((post, index) => (
-              <li key={index}>
+              <li className='mypost__item' key={index}>
                 <h3>{post.title}</h3>
                 <p>{post.message}</p>
-                <p>Date: {post.dateTime}</p>
+                <div className='mypost__metadata'>
+                    <div className='mypost__metadata__details'>
+                    <p>Date: {post.dateTime}</p>
+                    <p>Name: {user.name}</p>
+                    </div>
+                    <div className='mypost__metadata__icons'>
+                      <AiOutlineDelete />
+                      <AiOutlineEdit/>
+                    </div>
+                </div>
+                
               </li>
             ))}
           </ul>
@@ -55,6 +71,8 @@ export const MyPost = () => {
       ) : (
         <p>You have no post yet.</p>
       )}
-    </div>
+    </div></>
   );
 };
+
+
