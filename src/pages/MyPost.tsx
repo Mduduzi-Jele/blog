@@ -1,8 +1,7 @@
-import{ useEffect, useState , useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import Navigation from './Navigation';
-import {AiOutlineDelete, AiOutlineEdit} from 'react-icons/ai'
+import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
 import { MyContext } from "../App";
-
 
 interface User {
   name: string;
@@ -17,7 +16,7 @@ interface Post {
   dateTime: string;
 }
 
-export const MyPost= () => {
+export const MyPost = () => {
   const [user, setUser] = useState<User | null>(null);
   const { id } = useContext(MyContext);
 
@@ -31,7 +30,18 @@ export const MyPost= () => {
       setUser(null);
     }
   };
-  
+
+
+  const deletePost = (index: number) => {
+    if (user) {
+      const updatedPosts = [...user.myPosts];
+      updatedPosts.splice(index, 1)
+      const updatedUser = { ...user, myPosts: updatedPosts };
+      setUser(updatedUser);
+      localStorage.setItem(id, JSON.stringify(updatedUser));
+    }
+  };
+
   useEffect(() => {
     const filterKey = id;
     loadFilteredUserFromLocalStorage(filterKey);
@@ -39,40 +49,33 @@ export const MyPost= () => {
 
   return (
     <>
-    
-    <Navigation/>
-    <div className="mypost">
-      {user ? (
-        <div className='mypost__wrapper'>
-          {/* <h1>User Information</h1>
-          
-          <p>Email: {user.email}</p>
-          <h2>Posts</h2> */}
-          <ul className='mypost__list'>
-            {user.myPosts.map((post, index) => (
-              <li className='mypost__item' key={index}>
-                <h3>{post.title}</h3>
-                <p>{post.message}</p>
-                <div className='mypost__metadata'>
+      <Navigation />
+      <div className="mypost">
+        {user ? (
+          <div className='mypost__wrapper'>
+            <ul className='mypost__list'>
+              {user.myPosts.map((post, index) => (
+                <li className='mypost__item' key={index}>
+                  <h3>{post.title}</h3>
+                  <p>{post.message}</p>
+                  <div className='mypost__metadata'>
                     <div className='mypost__metadata__details'>
-                    <p>Date: {post.dateTime}</p>
-                    <p>Name: {user.name}</p>
+                      <p>Date: {post.dateTime}</p>
+                      <p>Name: {user.name}</p>
                     </div>
-                    <div className='mypost__metadata__icons'>
-                      <AiOutlineDelete />
-                      <AiOutlineEdit/>
+                    <div className='mypost__metadata__icons'>                    
+                      <AiOutlineDelete onClick={() => deletePost(index)} />                      
+                      <AiOutlineEdit />
                     </div>
-                </div>
-                
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : (
-        <p>You have no post yet.</p>
-      )}
-    </div></>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <p>You have no posts yet.</p>
+        )}
+      </div>
+    </>
   );
 };
-
-
