@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { MyContext } from "../App";
+import Navigation from "./Navigation";
 
 interface MyPostProps {}
 
@@ -46,22 +47,9 @@ const Create: React.FC<MyPostProps> = () => {
   };
 
   return (
-    // <div>
-    //   <h1>My Post</h1>
-    //   <input
-    //     type="text"
-    //     placeholder="Title"
-    //     value={title}
-    //     onChange={(e) => setTitle(e.target.value)}
-    //   />
-    //   <textarea
-    //     type="text"
-    //     placeholder="Message"
-    //     value={message}
-    //     onChange={(e) => setMessage(e.target.value)}
-    //   />
-    //   <button onClick={handlePostData}>Submit</button>
-    // </div>
+
+    <>
+    <Navigation />
     <div className="create-container">
       <h1>Create Post</h1>
       <form>
@@ -83,6 +71,7 @@ const Create: React.FC<MyPostProps> = () => {
         <button onClick={handlePostData}>Submit</button>
       </form>
     </div>
+    </>
   );
 };
 
