@@ -16,7 +16,7 @@ interface Post {
 
 export const MyPost = () => {
   const [user, setUser] = useState<User | null>(null);
-  const { id } = useContext(MyContext);
+ 
 
   const loadFilteredUserFromLocalStorage = (filterKey: number) => {
     const filteredUserJSON = localStorage.getItem(filterKey);
