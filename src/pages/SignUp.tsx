@@ -34,7 +34,7 @@ function SignUp() {
   }
  
   return (
-    <div>
+    <div className='box-container'>
       <div className='header-text'>
         <h1>Sign-Up</h1>
       </div>
