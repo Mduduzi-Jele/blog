@@ -38,22 +38,28 @@ const Login: React.FC = () => {
   };
   
   return (
-    <>
+    <div>
+            <div className='header-text'>
+        <h1>Log-in</h1>
+      </div>
       <input
-        type='text'
-        placeholder='email'
+        type='email'
+        placeholder='Email'
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-      ></input>
+      ></input> <br />
+      <br />
       <input
-        type='text'
-        placeholder='password'
+        type='password'
+        placeholder='Password'
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-      ></input>
+      ></input> <br />
+      <br />
       <button onClick={handleLogin}>Login</button>
-    </>
+    </div>
   );
 };
 
 export default Login;
+
