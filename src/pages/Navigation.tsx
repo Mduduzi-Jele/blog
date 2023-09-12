@@ -6,17 +6,21 @@ const Navigation = () => {
   const id = useContext(MyContext);
   
   return (
-    <div className="navigation">
-      <h1>Logo</h1>
-      <ul>
+    <>
+     <div className="navigation">
+      <h1 className="navigation__logo">Logo</h1>
+      <ul className="navigation__list">
         <li>
-          <Link to="/myposts">My Posts</Link>
+          <Link className="navigation__text" to="/myposts">My Posts</Link>
         </li>
         <li>
-          <Link to="/create">Create</Link>
+          <Link className="navigation__text" to="/create">Create</Link>
         </li>
       </ul>
+     
     </div>
+    <hr/>
+    </>
   );
 };
 
