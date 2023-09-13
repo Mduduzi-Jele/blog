@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@900&family=PT+Serif&display=swap');
 @import url('./css/create.css');
+@import url('./css/SignUp.css');
+
 body {
   
     font-family: 'PT Serif', serif;

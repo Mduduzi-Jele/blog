@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
+
+.box-container{
+  border: 2px solid lightblue;
+  width: 500px;
+  height: 550px;
+  border-radius: 10px;
+  margin: auto;
+  margin-top: 80px;
+}
+
+h1{
+  text-align: center;
+}
+
+.form-container input{
+  margin: auto;
+  display: block;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  width: 350px;
+  height: 30px;
+  border-color: lightblue;
+}
+
+.btnSignUp{
+  margin: auto;
+  display: block;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: lightblue;
+  border: none;
+  width: 350px;
+}
+
+.btnSignUp:hover{
+  background-color: darkblue;
+}
+
+.header-text{
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.line{
+  width: 30px;
+  border: 1px solid lightblue;
+  margin: auto;
+}
+
