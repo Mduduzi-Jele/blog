@@ -1,7 +1,7 @@
+@import url("./css/SignUp.css");
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@900&family=PT+Serif&display=swap');
 @import url('./css/create.css');
-@import url('./css/SignUp.css');
-
+@import url('./css/landingpage.css');
 body {
   
     font-family: 'PT Serif', serif;
@@ -15,7 +15,7 @@ body {
     max-width: 50%;
     font-size: 2.25rem;
     margin-block: 1rem;
-
+    cursor: pointer;
 }
 .navigation__text {
     text-decoration: none;

@@ -1,14 +1,12 @@
-import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { MyContext } from "../App";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navigation = () => {
-  const id = useContext(MyContext);
+  const navigate = useNavigate()
   
   return (
     <>
      <div className="navigation">
-      <h1 className="navigation__logo">Logo</h1>
+      <h1 className="navigation__logo" onClick={() => navigate("/home")}>Logo</h1>
       <ul className="navigation__list">
         <li>
           <Link className="navigation__text" to="/myposts">My Posts</Link>
