@@ -37,6 +37,8 @@ function SignUp() {
     <div className='box-container'>
       <div className='header-text'>
         <h1>Sign-Up</h1>
+        <div className='line'>
+        </div>
       </div>
 
       <div className='form-container'>
@@ -47,7 +49,7 @@ function SignUp() {
             name='name'
             value={name}
             onChange={(e) => setName(e.target.value)}
-            required>
+            required> 
           </input> <br />
           <br />
           <input type='email' 

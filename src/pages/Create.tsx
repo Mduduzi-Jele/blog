@@ -56,6 +56,7 @@ const Create: React.FC<MyPostProps> = () => {
         <div className="form-group">
           <input
             type="text"
+            className="anything"
             placeholder="Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -64,6 +65,7 @@ const Create: React.FC<MyPostProps> = () => {
         <div className="form-group">
           <textarea
             placeholder="Message"
+            className="anything"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           ></textarea>
