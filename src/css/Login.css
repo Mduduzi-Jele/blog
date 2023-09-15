@@ -1,23 +1,35 @@
-/* Login.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
+
 .box-container{
-  border: 2px solid black;
-  width: 400px;
-  height: 300px;
+  width: 500px;
+  height: 550px;
   border-radius: 10px;
   margin: auto;
-  margin-top: 150px;
+  margin-top: 80px;
+  color: black;
+  background: white;
+  transition: 1s;
+  box-shadow: 6px 6px 0 black;
+  border: 1px solid black;
+  justify-content: space-between;
+  align-items: center;
 }
+
+
 
 h1{
   text-align: center;
 }
 
-input{
+.form-container input{
   margin: auto;
   display: block;
   border-top: 0;
   border-left: 0;
   border-right: 0;
+  width: 350px;
+  height: 30px;
+  border-color: lightblue;
 }
 
 .button{
@@ -26,14 +38,32 @@ input{
   padding: 5px;
   border-radius: 5px;
   background-color: lightblue;
-  border: none;
+  color: black;
+  background: white;
+  transition: 1s;
+  box-shadow: 6px 6px 0 black;
+  transform: skewX(-15deg);
+  border: 1px solid black;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .button:hover{
-  background-color: darkblue;
+  transition: 0.5s;
+  box-shadow: 10px 10px 0 lightblue;
+  color: white;
+  background-color: black;
+  
+
 }
 
 .header-text{
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+}
+
+.line{
+  width: 30px;
+  border: 1px solid lightblue;
+  margin: auto;
 }
