@@ -38,10 +38,12 @@ const Login: React.FC = () => {
   };
   
   return (
-    <div>
+    <div className='box-container'>
             <div className='header-text'>
-        <h1>Log-in</h1>
+        <h1>Log-In</h1>
+        <div className='line'></div>
       </div>
+      <div className='form-container'>
       <input
         type='email'
         placeholder='Email'
@@ -56,7 +58,8 @@ const Login: React.FC = () => {
         onChange={(e) => setPassword(e.target.value)}
       ></input> <br />
       <br />
-      <button onClick={handleLogin}>Login</button>
+      < button className='button' onClick={handleLogin}>Login</button>
+    </div>
     </div>
   );
 };
