@@ -1,57 +1,26 @@
-import { Post } from "./Home";
+import { Post } from "./Posts";
 import { useState } from "react";
-import { useEffect } from "react";
-
-export interface User {
-  name: string;
-  email: string;
-  paswword: string;
-  myPosts: Post[];
-}
 
 interface SearchProps {
-  setSearchedPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  filteredPosts: Post[];
+  setFilteredPosts: React.Dispatch<React.SetStateAction<Post[]>>;
 }
 
-const Search: React.FC<SearchProps> = ({ setSearchedPosts }) => {
+const Search: React.FC<SearchProps> = ({ filteredPosts, setFilteredPosts }) => {
   const [searchItem, setSearchItem] = useState<string>("");
-  const [users, setUsers] = useState<User[]>([]);
 
-  useEffect(() => {
-    const localStorageKeys = Object.keys(localStorage);
-    const parsedUsers: User[] = [];
-  
-    localStorageKeys.forEach((key) => {
-      const userString = localStorage.getItem(key);
-  
-      if (userString !== null) {
-        try {
-          const user = JSON.parse(userString);
-          if (typeof user === 'object' && 'name' in user && 'email' in user && 'password' in user && 'myPosts' in user) {
-            parsedUsers.push(user);
-          } else {
-            console.error(`Data for key '${key}' in localStorage is not a valid User object.`);
-          }
-        } catch (error) {
-          console.error(`Error parsing data for key '${key}' from localStorage: ${error}`);
-        }
-      }
-    });
-    setUsers(parsedUsers);
-  }, []); 
-
-  const searchForSearchItem = (searchItem: string, users: User[]) =>{
+  const searchForSearchItem = (searchItem: string, posts: Post[]) => {
     const results: Post[] = [];
-    for (const user of users) {
-      for (const post of user.myPosts) {
-        if (post.title.toLowerCase().includes(searchItem.toLowerCase()) ||
-          post.description.toLowerCase().includes(searchItem.toLowerCase())) {
-          results.push(post);
-        }
+    for (const post of posts) {
+      if (
+        post.title.toLowerCase().includes(searchItem.toLowerCase()) ||
+        post.description.toLowerCase().includes(searchItem.toLowerCase())
+      ) {
+        results.push(post);
       }
     }
-    setSearchedPosts([...results])
-  }
+    setFilteredPosts([...results]);
+  };
 
   return (
     <div>
@@ -68,7 +37,9 @@ const Search: React.FC<SearchProps> = ({ setSearchedPosts }) => {
         value={searchItem}
         onChange={(e) => setSearchItem(e.target.value)}
       />
-      <button onClick={() => searchForSearchItem(searchItem, users)}>Search</button>
+      <button onClick={() => searchForSearchItem(searchItem, filteredPosts)}>
+        Search
+      </button>
     </div>
   );
 };
