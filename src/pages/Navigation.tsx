@@ -1,7 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { MyContext } from "../App";
 
 const Navigation = () => {
   const navigate = useNavigate()
+  const {setId} = useContext(MyContext);
+  const signOut = () => {
+    setId(0)
+    navigate("/")
+  }
   
   return (
     <>
@@ -15,7 +22,7 @@ const Navigation = () => {
           <Link className="navigation__text" to="/create">Create</Link>
         </li>
       </ul>
-     
+     <button onClick={() => signOut()}>Signout</button>
     </div>
     <hr/>
     </>

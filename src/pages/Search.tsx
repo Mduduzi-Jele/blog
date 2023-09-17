@@ -10,6 +10,7 @@ const Search: React.FC<SearchProps> = ({ filteredPosts, setFilteredPosts }) => {
   const [searchItem, setSearchItem] = useState<string>("");
 
   const searchForSearchItem = (searchItem: string, posts: Post[]) => {
+    console.log(searchItem, posts)
     const results: Post[] = [];
     for (const post of posts) {
       if (
