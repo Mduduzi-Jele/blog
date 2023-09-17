@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Rating from './Rating';
+import Search from './Search';
 
-interface Post {
+export interface Post {
   title: string;
-  message: string;
+  description: string;
   dateTime: Date;
 }
 
@@ -88,12 +89,13 @@ const Posts = () => {
         <button onClick={() => setFilterDuration('1month')}>1 Month</button>
         <button onClick={() => setFilterDuration('3months')}>3 Months</button>
       </div>
+      <div><Search filteredPosts={filteredPosts} setFilteredPosts={setFilteredPosts}/></div>
       {filteredPosts.length > 0 ? (
         <div>
           {filteredPosts.map((post, index) => (
             <div key={index}>
               <p>Title: {post.title}</p>
-              <p>Message: {post.message}</p>
+              <p>Message: {post.description}</p>
               <div>
                 <Rating initialRating={userRating} onRatingChange={handleRatingChange} />
                 {averageRating !== null && (
