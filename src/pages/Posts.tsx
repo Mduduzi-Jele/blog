@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import Rating from './Rating';
-import Search from './Search';
+import { useState, useEffect } from "react";
+import Rating from "./Rating";
+import Search from "./Search";
 
 export interface Post {
   title: string;
@@ -12,7 +12,7 @@ const Posts = () => {
   const [averageRating, setAverageRating] = useState<number | null>(null);
   const [userRating, setUserRating] = useState<number>(0);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
-  const [filterDuration, setFilterDuration] = useState<string>('all');
+  const [filterDuration, setFilterDuration] = useState<string>("all");
 
   const handleRatingChange = (newRating: number) => {
     setAverageRating(newRating);
@@ -44,27 +44,27 @@ const Posts = () => {
     threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
 
     let filtered: Post[] = [];
-    
+
     switch (filterDuration) {
-      case 'weekly':
+      case "weekly":
         filtered = allPosts.filter((post) => {
           const postDate = new Date(post.dateTime);
           return postDate >= oneWeekAgo;
         });
         break;
-      case '1month':
+      case "1month":
         filtered = allPosts.filter((post) => {
           const postDate = new Date(post.dateTime);
           return postDate >= oneMonthAgo;
         });
         break;
-      case '3months':
+      case "3months":
         filtered = allPosts.filter((post) => {
           const postDate = new Date(post.dateTime);
           return postDate >= threeMonthsAgo;
         });
         break;
-      case 'all':
+      case "all":
       default:
         filtered = allPosts;
         break;
@@ -74,7 +74,7 @@ const Posts = () => {
       if (a.dateTime && b.dateTime) {
         return new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime();
       } else {
-        return 0; 
+        return 0;
       }
     });
 
@@ -83,13 +83,18 @@ const Posts = () => {
 
   return (
     <div>
-      <div>
-        <button onClick={() => setFilterDuration('all')}>All</button>
-        <button onClick={() => setFilterDuration('weekly')}>Weekly</button>
-        <button onClick={() => setFilterDuration('1month')}>1 Month</button>
-        <button onClick={() => setFilterDuration('3months')}>3 Months</button>
+      <div className="filter__search">
+        <div className="filter">
+          <button onClick={() => setFilterDuration("all")}>All</button>
+          <button onClick={() => setFilterDuration("weekly")}>Weekly</button>
+          <button onClick={() => setFilterDuration("1month")}>1 Month</button>
+          <button onClick={() => setFilterDuration("3months")}>3 Months</button>
+        </div>
+          <Search
+            filteredPosts={filteredPosts}
+            setFilteredPosts={setFilteredPosts}
+          />
       </div>
-      <div><Search filteredPosts={filteredPosts} setFilteredPosts={setFilteredPosts}/></div>
       {filteredPosts.length > 0 ? (
         <div>
           {filteredPosts.map((post, index) => (
@@ -97,7 +102,10 @@ const Posts = () => {
               <p>Title: {post.title}</p>
               <p>Message: {post.description}</p>
               <div>
-                <Rating initialRating={userRating} onRatingChange={handleRatingChange} />
+                <Rating
+                  initialRating={userRating}
+                  onRatingChange={handleRatingChange}
+                />
                 {averageRating !== null && (
                   <p>Average Rating: {averageRating.toFixed(2)}</p>
                 )}

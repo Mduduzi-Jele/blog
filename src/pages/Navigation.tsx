@@ -11,7 +11,6 @@ const Navigation = () => {
   }
   
   return (
-    <>
      <div className="navigation">
       <h1 className="navigation__logo" onClick={() => navigate("/home")}>Logo</h1>
       <ul className="navigation__list">
@@ -24,8 +23,6 @@ const Navigation = () => {
       </ul>
      <button onClick={() => signOut()}>Signout</button>
     </div>
-    <hr/>
-    </>
   );
 };
 

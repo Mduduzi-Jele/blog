@@ -1,0 +1,15 @@
+.navigation {
+    display: flex;
+    background-color: #F96167;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.navigation__text {
+    color: white;
+}
+.navigation button {
+    height: 3rem;
+    margin-right: 5rem;
+    background-color: #F9E795;
+}
