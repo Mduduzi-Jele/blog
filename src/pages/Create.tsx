@@ -7,13 +7,13 @@ interface MyPostProps {}
 
 interface Post {
   title: string;
-  message: string;
+  description: string;
   dateTime: Date;
 }
 
 const Create: React.FC<MyPostProps> = () => {
   const [title, setTitle] = useState<string>("");
-  const [message, setMessage] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
 
   const { id } = useContext(MyContext);
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const Create: React.FC<MyPostProps> = () => {
           myPosts: [],
         };
 
-    const newPost: Post = { title, message, dateTime: new Date() };
+    const newPost: Post = { title, description, dateTime: new Date() };
 
     existingData.myPosts.push(newPost);
 
@@ -42,7 +42,7 @@ const Create: React.FC<MyPostProps> = () => {
 
     console.log("Data posted successfully!");
     setTitle("");
-    setMessage("");
+    setDescription("");
     navigate("/myposts");
   };
 
@@ -66,8 +66,8 @@ const Create: React.FC<MyPostProps> = () => {
           <textarea
             placeholder="Message"
             className="anything"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           ></textarea>
         </div>
         <button onClick={handlePostData}>Submit</button>
