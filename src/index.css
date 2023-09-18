@@ -58,6 +58,13 @@ body {
     background: #fff;
    padding: 15px;
 }
+
+.mypost__image-container img{
+  width: 100px;
+  height: 100%;
+}
+
+
 .mypost__item h3 {
     text-align: center;
     font-size: 6rem;
