@@ -1,21 +1,21 @@
-import { useState, useEffect } from "react";
-import Rating from "./Rating";
+import React, { useState, useEffect } from "react";
 import Search from "./Search";
 
 export interface Post {
   title: string;
   description: string;
   dateTime: Date;
+  likes: number;
 }
 
 const Posts = () => {
-  const [averageRating, setAverageRating] = useState<number | null>(null);
-  const [userRating, setUserRating] = useState<number>(0);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [filterDuration, setFilterDuration] = useState<string>("all");
 
-  const handleRatingChange = (newRating: number) => {
-    setAverageRating(newRating);
+  const handleLikePost = (postIndex: number) => {
+    const updatedPosts = [...filteredPosts];
+    updatedPosts[postIndex].likes += 1;
+    setFilteredPosts(updatedPosts);
   };
 
   useEffect(() => {
@@ -24,11 +24,18 @@ const Posts = () => {
 
     const fetchPosts = () => {
       localstoragekeys.forEach((userId) => {
-        const user = JSON.parse(localStorage.getItem(userId));
-        if (user && user.myPosts) {
-          user.myPosts.forEach((post: Post) => {
-            allPosts.push(post);
-          });
+        try {
+          const user = JSON.parse(localStorage.getItem(userId) || "");
+          if (user && user.myPosts) {
+            user.myPosts.forEach((post: Post) => {
+              if (!post.likes) {
+                post.likes = 0;
+              }
+              allPosts.push(post);
+            });
+          }
+        } catch (error) {
+          console.error("Error parsing JSON from localStorage:", error);
         }
       });
     };
@@ -49,13 +56,14 @@ const Posts = () => {
       case "weekly":
         filtered = allPosts.filter((post) => {
           const postDate = new Date(post.dateTime);
-          return postDate >= oneWeekAgo;
+          console.log(postDate +""+    oneWeekAgo)
+          return postDate >= oneWeekAgo ;
         });
         break;
       case "1month":
         filtered = allPosts.filter((post) => {
           const postDate = new Date(post.dateTime);
-          return postDate >= oneMonthAgo;
+          return postDate <= oneMonthAgo ;
         });
         break;
       case "3months":
@@ -85,15 +93,15 @@ const Posts = () => {
     <div>
       <div className="filter__search">
         <div className="filter">
-          <button onClick={() => setFilterDuration("all")}>All</button>
+          <button className="filterfirst" onClick={() => setFilterDuration("all")}>All</button>
           <button onClick={() => setFilterDuration("weekly")}>Weekly</button>
           <button onClick={() => setFilterDuration("1month")}>1 Month</button>
           <button onClick={() => setFilterDuration("3months")}>3 Months</button>
         </div>
-          <Search
-            filteredPosts={filteredPosts}
-            setFilteredPosts={setFilteredPosts}
-          />
+        <Search
+          filteredPosts={filteredPosts}
+          setFilteredPosts={setFilteredPosts}
+        />
       </div>
       {filteredPosts.length > 0 ? (
         <div>
@@ -101,15 +109,8 @@ const Posts = () => {
             <div key={index}>
               <p>Title: {post.title}</p>
               <p>Message: {post.description}</p>
-              <div>
-                <Rating
-                  initialRating={userRating}
-                  onRatingChange={handleRatingChange}
-                />
-                {averageRating !== null && (
-                  <p>Average Rating: {averageRating.toFixed(2)}</p>
-                )}
-              </div>
+              <button onClick={() => handleLikePost(index)}>Like</button>
+              <p>Likes: {post.likes}</p>
             </div>
           ))}
         </div>

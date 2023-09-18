@@ -6,7 +6,7 @@
 }
 
 .navigation__text {
-    color: white;
+    color: white !important;
 }
 .navigation button {
     height: 3rem;

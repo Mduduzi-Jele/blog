@@ -1,0 +1,14 @@
+.filter button:not(.filterfirst){   
+    margin-inline-start: 10px;
+}
+.filter button {
+    background: #F96167;
+    letter-spacing: 0.1rem;
+    font-weight: 100;
+    font-size: 1.125rem;
+    width: fit-content;
+}
+.filter__search {
+    width: 95%;
+    margin: 0 auto;
+}
