@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@900&family=PT+Serif&display=swap');
 @import url('./css/create.css');
 @import url('./css/landingpage.css');
+@import url('./css/Rating.css');
 body {
   
     font-family: 'PT Serif', serif;
@@ -120,4 +121,17 @@ body {
     top: 29px;
     margin-inline: 1.5rem;
     color: #0E2E50;   
+}
+.filter_button {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 15px;
+  display: flex;
+  column-gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.filter_button > *{
+    background: #F96167;
 }
