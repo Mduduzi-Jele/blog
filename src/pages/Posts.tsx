@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from "react";
 import Search from "./Search";
+import { useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { MyContext } from "../App";
 
 export interface Post {
   title: string;
   description: string;
   dateTime: Date;
   likes: number;
+  userId: string;
+  postId: string;
+  name: string;
 }
 
 const Posts = () => {
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [filterDuration, setFilterDuration] = useState<string>("all");
+  const {id, setId} = useContext(MyContext);
+
+  const navigate = useNavigate();
 
   const handleLikePost = (postIndex: number) => {
     const updatedPosts = [...filteredPosts];
@@ -23,6 +32,8 @@ const Posts = () => {
     const allPosts: Post[] = [];
 
     const fetchPosts = () => {
+      const myUser = JSON.parse(localStorage.getItem(id))
+      console.log(myUser.name)
       localstoragekeys.forEach((userId) => {
         try {
           const user = JSON.parse(localStorage.getItem(userId) || "");
@@ -36,6 +47,14 @@ const Posts = () => {
           }
         } catch (error) {
           console.error("Error parsing JSON from localStorage:", error);
+        }
+        const user = JSON.parse(localStorage.getItem(userId));
+        if (user && user.myPosts) {
+          user.myPosts.forEach((post: Post, index: number) => {
+            const mypost = {...post, userId, postId: index, name: myUser.name }
+            console.log(mypost)
+            allPosts.push(mypost);
+          });
         }
       });
     };
@@ -105,14 +124,33 @@ const Posts = () => {
       </div>
       {filteredPosts.length > 0 ? (
         <div>
-          {filteredPosts.map((post, index) => (
-            <div key={index}>
-              <p>Title: {post.title}</p>
-              <p>Message: {post.description}</p>
-              <button onClick={() => handleLikePost(index)}>Like</button>
-              <p>Likes: {post.likes}</p>
-            </div>
-          ))}
+          {filteredPosts.map((post, index) => {
+            let description = post.description.split(" ");
+            description = description.slice(0, 15);
+            const desc: string = description.join(" ");
+            return (
+              <div key={index}>
+                <p>Title: {post.title}</p>
+                <p>Message: {`${desc}...`}</p>
+                <button
+                  onClick={() =>
+                    navigate("/Readmore", {
+                      state: {
+                        id : post.userId,
+                        title: post.title,
+                        description: post.description,
+                        postId: post.postId,
+                        name: post.name,
+                      },
+                    })
+                  }
+                >
+                  Read More
+                </button>
+                
+              </div>
+            );
+          })}
         </div>
       ) : (
         <div>No posts added</div>
