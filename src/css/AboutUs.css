@@ -1,0 +1,96 @@
+.about-us {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: bisque;
+    
+  }
+  
+ 
+  .about-us header {
+    text-align: center;
+    
+  }
+  
+
+  .about-us section {
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+    border: 1px solid black;
+    justify-content: space-between;
+
+  }
+  
+  
+  .about-us h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  .team-members{
+    display: flex;
+    justify-content:space-around;
+    justify-items: center;
+  }
+ 
+  .team-member {
+    text-align: center;
+  }
+  
+  .team-member img {
+    max-width: 100px;
+    border-radius: 50%;
+    margin: 10px auto;
+  }
+  .get-in-touch,
+.join-news-community {
+  margin-bottom: 30px;
+}
+
+.get-in-touch h3,
+.join-news-community h3 {
+  font-size: 24px;
+  color: #333;
+}
+
+.get-in-touch p,
+.join-news-community p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.5;
+}
+ .get-in-touch a{
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 18px;
+    color: #007bff;
+    text-decoration: none;
+
+ }
+  .social-media-links a {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 18px;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .social-media-links a:hover {
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 600px) {
+    .about-us {
+      padding: 10px;
+    }
+  
+    .about-us h2 {
+      font-size: 20px;
+    }
+  
+    .team-member img {
+      max-width: 80px;
+    }
+  }
+  

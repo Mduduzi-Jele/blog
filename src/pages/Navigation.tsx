@@ -20,6 +20,9 @@ const Navigation = () => {
         <li>
           <Link className="navigation__text" to="/create">Create</Link>
         </li>
+        <li>
+          <Link className="navigation__text" to="/aboutus">About Us</Link>
+        </li>
       </ul>
      <button onClick={() => signOut()}>Signout</button>
     </div>
