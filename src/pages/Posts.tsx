@@ -9,6 +9,7 @@ export interface Post {
   title: string;
   description: string;
   dateTime: Date;
+  views: number; // Add a views property
   userId: string;
   postId: string;
   name: string;
@@ -64,25 +65,25 @@ const Posts = () => {
     let filtered: Post[] = [];
 
     switch (filterDuration) {
-      case "weekly":
+      case 'weekly':
         filtered = allPosts.filter((post) => {
           const postDate = new Date(post.dateTime);
           return postDate >= oneWeekAgo;
         });
         break;
-      case "1month":
+      case '1month':
         filtered = allPosts.filter((post) => {
           const postDate = new Date(post.dateTime);
           return postDate >= oneMonthAgo;
         });
         break;
-      case "3months":
+      case '3months':
         filtered = allPosts.filter((post) => {
           const postDate = new Date(post.dateTime);
           return postDate >= threeMonthsAgo;
         });
         break;
-      case "all":
+      case 'all':
       default:
         filtered = allPosts;
         break;
@@ -99,14 +100,26 @@ const Posts = () => {
     setFilteredPosts(sortedArray);
   }, [filterDuration]);
 
+  const handleViewClick = (postIndex: number) => {
+    // Create a copy of the filtered posts array
+    const updatedPosts = [...filteredPosts];
+  
+    // Increment the views count for the clicked post
+    updatedPosts[postIndex].views = (updatedPosts[postIndex].views || 0) + 1;
+  
+    // Update the state with the modified posts array
+    setFilteredPosts(updatedPosts);
+  };
+  
+
   return (
     <div>
       <div className="filter__search">
         <div className="filter">
-          <button onClick={() => setFilterDuration("all")}>All</button>
-          <button onClick={() => setFilterDuration("weekly")}>Weekly</button>
-          <button onClick={() => setFilterDuration("1month")}>1 Month</button>
-          <button onClick={() => setFilterDuration("3months")}>3 Months</button>
+          <button onClick={() => setFilterDuration('all')}>All</button>
+          <button onClick={() => setFilterDuration('weekly')}>Weekly</button>
+          <button onClick={() => setFilterDuration('1month')}>1 Month</button>
+          <button onClick={() => setFilterDuration('3months')}>3 Months</button>
         </div>
         <Search
           filteredPosts={filteredPosts}

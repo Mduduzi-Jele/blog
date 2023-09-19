@@ -6,6 +6,7 @@ import { MyPost } from "./pages/MyPost";
 import Create from "./pages/Create";
 import SignUp from "./pages/SignUp";
 import LandingPage from "./pages/LandingPage";
+import AboutUs from "./pages/AboutUs";
 import Readmore from "./pages/Readmore";
 import { Edit } from "./pages/edit";
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/login" element={<Login/>} />
           <Route path="/myposts" element={< MyPost/>} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/Readmore" element={<Readmore/>}/>
           <Route path="/edit" element={<Edit/>}/>
         </Routes>
