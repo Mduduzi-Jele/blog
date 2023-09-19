@@ -6,6 +6,9 @@
 @import url('./css/posts.css');
 @import url('./css/search.css');
 @import url('./css/navigation.css');
+@import url("./css/footer.css");
+@import url("./css/displayComment.css");
+
 body {
   
     font-family: 'PT Serif', serif;
