@@ -19,7 +19,7 @@ const Posts = () => {
   const [userRating, setUserRating] = useState<number>(0);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [filterDuration, setFilterDuration] = useState<string>("all");
-  const {id, setId} = useContext(MyContext);
+  const { id, setId } = useContext(MyContext);
 
   const navigate = useNavigate();
 
@@ -32,14 +32,19 @@ const Posts = () => {
     const allPosts: Post[] = [];
 
     const fetchPosts = () => {
-      const myUser = JSON.parse(localStorage.getItem(id))
-      console.log(myUser.name)
+      const myUser = JSON.parse(localStorage.getItem(id));
+      console.log(myUser.name);
       localstoragekeys.forEach((userId) => {
         const user = JSON.parse(localStorage.getItem(userId));
         if (user && user.myPosts) {
           user.myPosts.forEach((post: Post, index: number) => {
-            const mypost = {...post, userId, postId: index, name: myUser.name }
-            console.log(mypost)
+            const mypost = {
+              ...post,
+              userId,
+              postId: index,
+              name: myUser.name,
+            };
+            console.log(mypost);
             allPosts.push(mypost);
           });
         }
@@ -119,17 +124,17 @@ const Posts = () => {
                 <p>Title: {post.title}</p>
                 <p>Message: {`${desc}...`}</p>
                 <button
-                  onClick={() =>
+                  onClick={() => {
                     navigate("/Readmore", {
                       state: {
-                        id : post.userId,
+                        id: post.userId,
                         title: post.title,
                         description: post.description,
                         postId: post.postId,
                         name: post.name,
                       },
-                    })
-                  }
+                    });
+                  }}
                 >
                   Read More
                 </button>
