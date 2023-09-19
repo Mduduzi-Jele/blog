@@ -1,0 +1,100 @@
+import  { useState, useEffect, useContext } from 'react';
+import { AiOutlineDelete } from 'react-icons/ai';
+import Navigation from './Navigation';
+import { MyContext } from '../App';
+
+
+export const MyPost = () => {
+    const [user, setUser] = useState<User | null>(null);
+    const { id } = useContext(MyContext);
+  
+    const [editMode, setEditMode] = useState<number | null>(null);
+    const [editedContent, setEditedContent] = useState<string>('');
+  
+    const loadFilteredUserFromLocalStorage = (filterKey: string) => {
+      const filteredUserJSON = localStorage.getItem(filterKey);
+  
+      if (filteredUserJSON !== null) {
+        const filteredUser: User = JSON.parse(filteredUserJSON);
+        setUser(filteredUser);
+      } else {
+        setUser(null);
+      }
+    };
+  
+    const deletePost = (index: number) => {
+      if (user) {
+        const updatedPosts = [...user.myPosts];
+        updatedPosts.splice(index, 1);
+        const updatedUser = { ...user, myPosts: updatedPosts };
+        setUser(updatedUser);
+        localStorage.setItem(id, JSON.stringify(updatedUser));
+      }
+    };
+  
+    const editPost = (index: number, content: string) => {
+      setEditMode(index);
+      setEditedContent(content);
+    };
+  
+    const saveEditedPost = (index: number) => {
+      if (user && editMode !== null) {
+        const updatedPosts = [...user.myPosts];
+        updatedPosts[index].message = editedContent;
+        const updatedUser = { ...user, myPosts: updatedPosts };
+        setUser(updatedUser);
+        localStorage.setItem(id, JSON.stringify(updatedUser));
+        setEditMode(null);
+      }
+    };
+  
+    useEffect(() => {
+      const filterKey = id;
+      loadFilteredUserFromLocalStorage(filterKey);
+    }, [id]);
+  
+    return (
+      <>
+        <Navigation />
+        <div className="mypost">
+          {user ? (
+            <div className='mypost__wrapper'>
+              <ul className='mypost__list'>
+                {user.myPosts.map((post, index) => (
+                  <li className='mypost__item' key={index}>
+                    <h3>{post.title}</h3>
+                    {editMode === index ? (
+                      <textarea
+                        value={editedContent}
+                        onChange={(e) => setEditedContent(e.target.value)}
+                      />
+                    ) : (
+                      <p>{post.message}</p>
+                    )}
+                    <div className='mypost__metadata'>
+                      <div className='mypost__metadata__details'>
+                        <p>Date: {post.dateTime}</p>
+                        <p>Name: {user.name}</p>
+                      </div>
+                      <div className='mypost__metadata__icons'>
+                        {editMode === index ? (
+                          <button onClick={() => saveEditedPost(index)}>Save</button>
+                        ) : (
+                          <>
+                            <button onClick={() => editPost(index, post.message)}>Edit</button>
+                            <AiOutlineDelete onClick={() => deletePost(index)} />
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <p>You have no posts yet.</p>
+          )}
+        </div>
+      </>
+    );
+  };
