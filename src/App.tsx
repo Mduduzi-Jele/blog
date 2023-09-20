@@ -6,8 +6,11 @@ import { MyPost } from "./pages/MyPost";
 import Create from "./pages/Create";
 import SignUp from "./pages/SignUp";
 import LandingPage from "./pages/LandingPage";
+import Footer from "./pages/Footer";
+import DisplayComment from "./pages/DisplayComment";
 import Readmore from "./pages/Readmore";
 import { Edit } from "./pages/edit";
+
 
 export const MyContext = createContext({});
 
@@ -23,6 +26,8 @@ function App() {
           <Route path="/login" element={<Login/>} />
           <Route path="/myposts" element={< MyPost/>} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="displaycomment" element ={<DisplayComment />} />
+          <Route path="footer" element = {<Footer />}/>
           <Route path="/Readmore" element={<Readmore/>}/>
           <Route path="/edit" element={<Edit/>}/>
         </Routes>

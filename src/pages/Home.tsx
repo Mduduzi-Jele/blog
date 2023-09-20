@@ -1,5 +1,6 @@
 import Navigation from "./Navigation";
 import Posts from "./Posts";
+import Footer from "./Footer";
 
 export interface Comment {
   name: string;
@@ -12,6 +13,7 @@ const Home = () => {
     <div>
       <Navigation />
       <Posts />
+      <Footer />
     </div>
   );
 };

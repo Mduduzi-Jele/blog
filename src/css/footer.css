@@ -1,0 +1,26 @@
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.footer-list{
+    text-align: center;
+    padding: 50px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.389);
+    margin-top: 50px;
+    padding-bottom: 10px;
+}
+
+.footer-line{
+    border-bottom: 2px solid white;
+    width: 800px;
+    margin: auto;
+    padding: 20px;
+}
