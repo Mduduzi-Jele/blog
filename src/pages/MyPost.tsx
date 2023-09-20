@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import Navigation from './Navigation';
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
 import { MyContext } from "../App";
+import { useNavigate } from 'react-router-dom';
 
 interface User {
   name: string;
@@ -19,6 +20,7 @@ interface Post {
 export const MyPost = () => {
   const [user, setUser] = useState<User | null>(null);
   const { id } = useContext(MyContext);
+  const navigate = useNavigate()
 
   const loadFilteredUserFromLocalStorage = (filterKey: string) => {
     const filteredUserJSON = localStorage.getItem(filterKey);
@@ -65,7 +67,7 @@ export const MyPost = () => {
                     </div>
                     <div className='mypost__metadata__icons'>                    
                       <AiOutlineDelete onClick={() => deletePost(index)} />                      
-                      <AiOutlineEdit />
+                      <AiOutlineEdit onClick={() => navigate("/edit")}/>
                     </div>
                   </div>
                 </li>

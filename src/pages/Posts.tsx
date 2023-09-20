@@ -1,11 +1,17 @@
 import { useState, useEffect } from "react";
 import Rating from "./Rating";
 import Search from "./Search";
+import { useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { MyContext } from "../App";
 
 export interface Post {
   title: string;
   description: string;
   dateTime: Date;
+  userId: string;
+  postId: string;
+  name: string;
 }
 
 const Posts = () => {
@@ -13,6 +19,9 @@ const Posts = () => {
   const [userRating, setUserRating] = useState<number>(0);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [filterDuration, setFilterDuration] = useState<string>("all");
+  const { id, setId } = useContext(MyContext);
+
+  const navigate = useNavigate();
 
   const handleRatingChange = (newRating: number) => {
     setAverageRating(newRating);
@@ -23,11 +32,20 @@ const Posts = () => {
     const allPosts: Post[] = [];
 
     const fetchPosts = () => {
+      const myUser = JSON.parse(localStorage.getItem(id));
+      console.log(myUser.name);
       localstoragekeys.forEach((userId) => {
         const user = JSON.parse(localStorage.getItem(userId));
         if (user && user.myPosts) {
-          user.myPosts.forEach((post: Post) => {
-            allPosts.push(post);
+          user.myPosts.forEach((post: Post, index: number) => {
+            const mypost = {
+              ...post,
+              userId,
+              postId: index,
+              name: myUser.name,
+            };
+            console.log(mypost);
+            allPosts.push(mypost);
           });
         }
       });
@@ -90,28 +108,48 @@ const Posts = () => {
           <button onClick={() => setFilterDuration("1month")}>1 Month</button>
           <button onClick={() => setFilterDuration("3months")}>3 Months</button>
         </div>
-          <Search
-            filteredPosts={filteredPosts}
-            setFilteredPosts={setFilteredPosts}
-          />
+        <Search
+          filteredPosts={filteredPosts}
+          setFilteredPosts={setFilteredPosts}
+        />
       </div>
       {filteredPosts.length > 0 ? (
         <div>
-          {filteredPosts.map((post, index) => (
-            <div key={index}>
-              <p>Title: {post.title}</p>
-              <p>Message: {post.description}</p>
-              <div>
-                <Rating
-                  initialRating={userRating}
-                  onRatingChange={handleRatingChange}
-                />
-                {averageRating !== null && (
-                  <p>Average Rating: {averageRating.toFixed(2)}</p>
-                )}
+          {filteredPosts.map((post, index) => {
+            let description = post.description.split(" ");
+            description = description.slice(0, 15);
+            const desc: string = description.join(" ");
+            return (
+              <div key={index}>
+                <p>Title: {post.title}</p>
+                <p>Message: {`${desc}...`}</p>
+                <button
+                  onClick={() => {
+                    navigate("/Readmore", {
+                      state: {
+                        id: post.userId,
+                        title: post.title,
+                        description: post.description,
+                        postId: post.postId,
+                        name: post.name,
+                      },
+                    });
+                  }}
+                >
+                  Read More
+                </button>
+                <div>
+                  <Rating
+                    initialRating={userRating}
+                    onRatingChange={handleRatingChange}
+                  />
+                  {averageRating !== null && (
+                    <p>Average Rating: {averageRating.toFixed(2)}</p>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       ) : (
         <div>No posts added</div>
