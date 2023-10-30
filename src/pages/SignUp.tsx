@@ -1,13 +1,11 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import React, { useContext } from "react";
-import { MyContext } from "../App";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import React from "react";
 
 function SignUp() {
-  const [name, setName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const {id, setId} = useContext(MyContext);
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -17,62 +15,81 @@ function SignUp() {
       name,
       email,
       password,
-      myPosts: []
     };
 
-    let id = localStorage.length;
-    let userId = id + 1
-    
-    setId(userId)
-    
-    localStorage.setItem(userId, JSON.stringify(newUser));
+    fetch("http://localhost:8080/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newUser),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Network response was not ok");
+        }
+      })
+      .then((data) => {
+        sessionStorage.setItem("userId", data.id)
+        console.log("Server response:", data);
+      })
+      .catch((error) => {
+        console.error("Fetch error", error);
+      });
 
-    setName('');
-    setEmail('');
-    setPassword('');
-    navigate('/home');
-  }
- 
+    setName("");
+    setEmail("");
+    setPassword("");
+    navigate("/home");
+  };
+
   return (
-    <div className='box-container'>
-      <div className='header-text'>
+    <div className="box-container">
+      <div className="header-text">
         <h1>Sign-Up</h1>
-        <div className='line'>
-        </div>
+        <div className="line"></div>
       </div>
 
-      <div className='form-container'>
+      <div className="form-container">
         <form onSubmit={handleSubmit}>
-          <input type='text' 
-            className='text-area' 
-            placeholder='Name'
-            name='name'
+          <input
+            type="text"
+            className="text-area"
+            placeholder="Name"
+            name="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            required> 
-          </input> <br />
+            required
+          ></input>{" "}
           <br />
-          <input type='email' 
-            className='text-area' 
-            placeholder='Email'
-            name='email'
+          <br />
+          <input
+            type="email"
+            className="text-area"
+            placeholder="Email"
+            name="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}>
-          </input> <br />
+            onChange={(e) => setEmail(e.target.value)}
+          ></input>{" "}
           <br />
-          <input type='password' 
-            className='text-area' 
-            placeholder='Password'
-            name='password'
+          <br />
+          <input
+            type="password"
+            className="text-area"
+            placeholder="Password"
+            name="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}>
-          </input> <br />
+            onChange={(e) => setPassword(e.target.value)}
+          ></input>{" "}
           <br />
-          <button className='btnSignUp'>Sign Up</button>
-        </form> 
+          <br />
+          <button className="btnSignUp">Sign Up</button>
+        </form>
       </div>
     </div>
-  )
+  );
 }
 
-export default SignUp
+export default SignUp;

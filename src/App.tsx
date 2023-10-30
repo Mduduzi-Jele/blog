@@ -9,7 +9,7 @@ import LandingPage from "./pages/LandingPage";
 import Footer from "./pages/Footer";
 import DisplayComment from "./pages/DisplayComment";
 import Readmore from "./pages/Readmore";
-import { Edit } from "./pages/edit";
+import Update from "./pages/Update";
 
 
 export const MyContext = createContext({});
@@ -29,7 +29,7 @@ function App() {
           <Route path="displaycomment" element ={<DisplayComment />} />
           <Route path="footer" element = {<Footer />}/>
           <Route path="/Readmore" element={<Readmore/>}/>
-          <Route path="/edit" element={<Edit/>}/>
+          <Route path="/edit" element={<Update />}/>
         </Routes>
       </Router>
     </MyContext.Provider>

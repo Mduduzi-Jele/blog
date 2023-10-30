@@ -13,7 +13,6 @@ const Home = () => {
     <div>
       <Navigation />
       <Posts />
-      <Footer />
     </div>
   );
 };

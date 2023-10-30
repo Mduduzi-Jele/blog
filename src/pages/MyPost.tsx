@@ -1,82 +1,98 @@
-import { useEffect, useState, useContext } from 'react';
-import Navigation from './Navigation';
-import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
-import { MyContext } from "../App";
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import Navigation from "./Navigation";
+import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 interface User {
+  id: number;
   name: string;
-  password: string;
   email: string;
-  myPosts: Post[];
 }
 
 interface Post {
+  id: number;
   title: string;
-  message: string;
-  dateTime: string;
+  description: string;
+  dataTime: string;
+  user: User;
+  likes: number;
+  views: number;
 }
 
 export const MyPost = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const { id } = useContext(MyContext);
-  const navigate = useNavigate()
-
-  const loadFilteredUserFromLocalStorage = (filterKey: string) => {
-    const filteredUserJSON = localStorage.getItem(filterKey);
-
-    if (filteredUserJSON !== null) {
-      const filteredUser: User = JSON.parse(filteredUserJSON);
-      setUser(filteredUser);
-    } else {
-      setUser(null);
-    }
-  };
-
-
-  const deletePost = (index: number) => {
-    if (user) {
-      const updatedPosts = [...user.myPosts];
-      updatedPosts.splice(index, 1)
-      const updatedUser = { ...user, myPosts: updatedPosts };
-      setUser(updatedUser);
-      localStorage.setItem(id, JSON.stringify(updatedUser));
-    }
-  };
+  const [posts, setPosts] = useState<Post[] | null>([]);
+  const userId = sessionStorage.getItem("userId")
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const filterKey = id;
-    loadFilteredUserFromLocalStorage(filterKey);
-  }, [id]);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/user/${userId}/posts`);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const jsonData = await response.json();
+        console.log(jsonData);
+        setPosts(jsonData);
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
+    };
+
+    fetchData();
+  }, [userId]);
+
+  const deletePost = (postId, index) => {
+    fetch(`http://localhost:8080/post/${postId}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          // Post deleted successfully
+          posts?.splice(index, 1);
+          console.log(`Post with ID ${postId} has been deleted.`);
+        } else {
+          // Handle errors, e.g., if the post doesn't exist
+          console.error("Error deleting the post.");
+        }
+      })
+      .catch((error) => {
+        // Handle network or other errors
+        console.error("Fetch error:", error);
+      });
+  };
 
   return (
     <>
       <Navigation />
       <div className="mypost">
-        {user ? (
-          <div className='mypost__wrapper'>
-            <ul className='mypost__list'>
-              {user.myPosts.map((post, index) => (
-                <li className='mypost__item' key={index}>
-                  <h3>{post.title}</h3>
-                  <p>{post.message}</p>
-                  <div className='mypost__metadata'>
-                    <div className='mypost__metadata__details'>
-                      <p>Date: {post.dateTime}</p>
-                      <p>Name: {user.name}</p>
-                    </div>
-                    <div className='mypost__metadata__icons'>                    
-                      <AiOutlineDelete onClick={() => deletePost(index)} />                      
-                      <AiOutlineEdit onClick={() => navigate("/edit")}/>
-                    </div>
+        <div className="mypost__wrapper">
+          <ul className="mypost__list">
+            {posts?.map((post, index) => (
+              <li className="mypost__item" key={index}>
+                <img className="mypost__item__image" src={`http://localhost:8080/images/${post.id}`} alt="Uploaded Image" />
+                <h3>{post.title}</h3>
+                <p>{post.description}</p>
+                <div className="mypost__metadata">
+                  <div className="mypost__metadata__details">
+                    <p>Date: {post.dataTime}</p>
+                    <p>Name: {post.user.name}</p>
                   </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : (
-          <p>You have no posts yet.</p>
-        )}
+                  <div className="mypost__metadata__icons">
+                    <AiOutlineDelete onClick={() => deletePost(post.id, index)} />
+                    <AiOutlineEdit onClick={() => navigate("/edit", {
+                        state: {
+                          id: post.id,
+                          title: post.title,
+                          description: post.description
+                        },
+                      })} />
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </>
   );

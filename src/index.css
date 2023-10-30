@@ -67,7 +67,10 @@ body {
 .mypost__item {
     background: #fff;
    padding: 15px;
+   display: flex;
+   flex-direction: column;
 }
+
 .mypost__item h3 {
     text-align: center;
     font-size: 6rem;
@@ -88,6 +91,13 @@ body {
     margin-inline: 16rem;   
     text-align: justify;
 }
+
+.mypost__item__image {
+    width: 38rem;
+    height: 20rem;
+    align-self: center;
+}
+
 @media(max-width : 50rem)
 {
     .mypost__item  > p {

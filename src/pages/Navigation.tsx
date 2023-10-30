@@ -1,12 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { MyContext } from "../App";
+// import { useContext } from "react";
+// import { MyContext } from "../App";
 
 const Navigation = () => {
   const navigate = useNavigate()
-  const {setId} = useContext(MyContext);
+  // const {setId} = useContext(MyContext);
   const signOut = () => {
-    setId(0)
+    sessionStorage.clear()
     navigate("/")
   }
   

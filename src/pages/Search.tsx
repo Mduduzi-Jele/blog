@@ -1,16 +1,22 @@
 import { Post } from "./Posts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface SearchProps {
-  filteredPosts: Post[];
-  setFilteredPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  posts: Post[]
+  setSearch: React.Dispatch<React.SetStateAction<Boolean>>;
+  setSearchedPosts: React.Dispatch<React.SetStateAction<Post[]>>;
 }
 
-const Search: React.FC<SearchProps> = ({ filteredPosts, setFilteredPosts }) => {
+const Search: React.FC<SearchProps> = ({ posts, setSearch, setSearchedPosts }) => {
   const [searchItem, setSearchItem] = useState<string>("");
 
+  useEffect(() => {
+    if(searchItem === ''){
+      setSearch(false)
+    }
+  },[searchItem])
+
   const searchForSearchItem = (searchItem: string, posts: Post[]) => {
-    console.log(searchItem, posts)
     const results: Post[] = [];
     for (const post of posts) {
       if (
@@ -20,7 +26,7 @@ const Search: React.FC<SearchProps> = ({ filteredPosts, setFilteredPosts }) => {
         results.push(post);
       }
     }
-    setFilteredPosts([...results]);
+    setSearchedPosts([...results]);
   };
 
   return (
@@ -38,7 +44,10 @@ const Search: React.FC<SearchProps> = ({ filteredPosts, setFilteredPosts }) => {
         value={searchItem}
         onChange={(e) => setSearchItem(e.target.value)}
       />
-      <button onClick={() => searchForSearchItem(searchItem, filteredPosts)}>
+      <button onClick={() => {
+        searchForSearchItem(searchItem, posts)
+        setSearch(true)
+      }}>
         Search
       </button>
     </div>

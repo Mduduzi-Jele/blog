@@ -1,159 +1,201 @@
 import { useState, useEffect } from "react";
-import Rating from "./Rating";
 import Search from "./Search";
 import { useNavigate } from "react-router-dom";
-import React, { useContext } from "react";
-import { MyContext } from "../App";
 
 export interface Post {
+  id: number;
   title: string;
   description: string;
-  dateTime: Date;
-  userId: string;
-  postId: string;
+  dataTime: Date;
   name: string;
+  views: number;
+  likes: number;
 }
 
 const Posts = () => {
-  const [averageRating, setAverageRating] = useState<number | null>(null);
-  const [userRating, setUserRating] = useState<number>(0);
-  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
-  const [filterDuration, setFilterDuration] = useState<string>("all");
-  const { id, setId } = useContext(MyContext);
-
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [searchedPosts, setSearchedPosts] = useState<Post[]>([]);
+  const [search, setSearch] = useState(false);
   const navigate = useNavigate();
 
-  const handleRatingChange = (newRating: number) => {
-    setAverageRating(newRating);
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/posts`);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const jsonData = await response.json();
+      setPosts(jsonData);
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
   };
 
-  useEffect(() => {
-    const localstoragekeys = Object.keys(localStorage);
-    const allPosts: Post[] = [];
-
-    const fetchPosts = () => {
-      const myUser = JSON.parse(localStorage.getItem(id));
-      console.log(myUser.name);
-      localstoragekeys.forEach((userId) => {
-        const user = JSON.parse(localStorage.getItem(userId));
-        if (user && user.myPosts) {
-          user.myPosts.forEach((post: Post, index: number) => {
-            const mypost = {
-              ...post,
-              userId,
-              postId: index,
-              name: myUser.name,
-            };
-            console.log(mypost);
-            allPosts.push(mypost);
-          });
-        }
-      });
-    };
-
-    fetchPosts();
-
-    const now = new Date();
-    const oneWeekAgo = new Date(now);
-    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-    const oneMonthAgo = new Date(now);
-    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-    const threeMonthsAgo = new Date(now);
-    threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
-
-    let filtered: Post[] = [];
-
-    switch (filterDuration) {
-      case "weekly":
-        filtered = allPosts.filter((post) => {
-          const postDate = new Date(post.dateTime);
-          return postDate >= oneWeekAgo;
-        });
-        break;
-      case "1month":
-        filtered = allPosts.filter((post) => {
-          const postDate = new Date(post.dateTime);
-          return postDate >= oneMonthAgo;
-        });
-        break;
-      case "3months":
-        filtered = allPosts.filter((post) => {
-          const postDate = new Date(post.dateTime);
-          return postDate >= threeMonthsAgo;
-        });
-        break;
-      case "all":
-      default:
-        filtered = allPosts;
-        break;
-    }
-
-    const sortedArray = filtered.sort((a, b) => {
-      if (a.dateTime && b.dateTime) {
-        return new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime();
+  const sortData = () => {
+    posts.sort((a, b) => {
+      if (a.dataTime && b.dataTime) {
+        return new Date(b.dataTime).getTime() - new Date(a.dataTime).getTime();
       } else {
         return 0;
       }
     });
+  };
 
-    setFilteredPosts(sortedArray);
-  }, [filterDuration]);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  sortData()
+
+  const addView = (post: Post) => {
+    // const userId = sessionStorage.getItem("userId")
+    const newPost = { views: post.views + 1 };
+
+    fetch(`http://localhost:8080/view/${post.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newPost),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Network response was not ok");
+        }
+      })
+      .then((data) => {
+        console.log("Server response:", data);
+      })
+      .catch((error) => {
+        console.error("Fetch error", error);
+      });
+  };
+
+  const allPosts = () => {
+    fetchData();
+    sortData()
+  };
+
+  const weekly = (posts: Post[]) => {
+    const now = new Date();
+    const oneWeekAgo = new Date(now);
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+    const filteredPosts = posts.filter((post) => {
+      const postDate = new Date(post.dataTime);
+      return postDate <= oneWeekAgo;
+    });
+
+    setPosts(filteredPosts);
+    sortData();
+  };
+
+  const monthly = (posts: Post[]) => {
+    const now = new Date();
+    const oneMonthAgo = new Date(now);
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+    const filteredPosts = posts.filter((post) => {
+      const postDate = new Date(post.dataTime);
+      return postDate <= oneMonthAgo;
+    });
+    setPosts(filteredPosts);
+    sortData();
+  };
+
+  const threeMonths = (posts: Post[]) => {
+    const now = new Date();
+    const threeMonthsAgo = new Date(now);
+    threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+    const filteredPosts = posts.filter((post) => {
+      const postDate = new Date(post.dataTime);
+      return postDate <= threeMonthsAgo;
+    });
+    setPosts(filteredPosts);
+    sortData();
+  };
 
   return (
     <div>
       <div className="filter__search">
         <div className="filter">
-          <button onClick={() => setFilterDuration("all")}>All</button>
-          <button onClick={() => setFilterDuration("weekly")}>Weekly</button>
-          <button onClick={() => setFilterDuration("1month")}>1 Month</button>
-          <button onClick={() => setFilterDuration("3months")}>3 Months</button>
+          <button onClick={() => {allPosts()}}>All</button>
+          <button onClick={() => {weekly(posts)}}>Weekly</button>
+          <button onClick={() => {monthly(posts)}}>1 Month</button>
+          <button onClick={() => {threeMonths(posts)}}>3 Months</button>
         </div>
         <Search
-          filteredPosts={filteredPosts}
-          setFilteredPosts={setFilteredPosts}
+          posts={posts}
+          setSearch={setSearch}
+          setSearchedPosts={setSearchedPosts}
         />
       </div>
-      {filteredPosts.length > 0 ? (
-        <div>
-          {filteredPosts.map((post, index) => {
-            let description = post.description.split(" ");
-            description = description.slice(0, 15);
-            const desc: string = description.join(" ");
-            return (
-              <div key={index}>
-                <p>Title: {post.title}</p>
-                <p>Message: {`${desc}...`}</p>
-                <button
-                  onClick={() => {
-                    navigate("/Readmore", {
-                      state: {
-                        id: post.userId,
-                        title: post.title,
-                        description: post.description,
-                        postId: post.postId,
-                        name: post.name,
-                      },
-                    });
-                  }}
-                >
-                  Read More
-                </button>
-                <div>
-                  <Rating
-                    initialRating={userRating}
-                    onRatingChange={handleRatingChange}
-                  />
-                  {averageRating !== null && (
-                    <p>Average Rating: {averageRating.toFixed(2)}</p>
-                  )}
+      <div>
+        {search === false
+          ? posts?.map((post, index) => {
+              let description = post.description.split(" ");
+              description = description.slice(0, 15);
+              const desc: string = description.join(" ");
+              return (
+                <div key={index}>
+                  <img className="mypost__item__image" src={`http://localhost:8080/images/${post.id}`} alt="Uploaded Image" />
+                  <p>Title: {post.title}</p>
+                  <p>Message: {`${desc}...`}</p>
+                  <p>Views: {post.views}</p>
+                  <p>Likes: {post.likes}</p>
+                  <p>Time: {post.dataTime.toString()}</p>
+                  <button
+                    onClick={() => {
+                      addView(post);
+                      navigate("/Readmore", {
+                        state: {
+                          id: post.id,
+                          title: post.title,
+                          description: post.description,
+                          dateTime: post.dataTime,
+                          likes: post.likes,
+                        },
+                      });
+                    }}
+                  >
+                    Read More
+                  </button>
+                  <div></div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-      ) : (
-        <div>No posts added</div>
-      )}
+              );
+            })
+          : searchedPosts?.map((post, index) => {
+              let description = post.description.split(" ");
+              description = description.slice(0, 15);
+              const desc: string = description.join(" ");
+              return (
+                <div key={index}>
+                  <p>Title: {post.title}</p>
+                  <p>Message: {`${desc}...`}</p>
+                  <p>Views: {post.views}</p>
+                  <p>Likes: {post.likes}</p>
+                  <button
+                    onClick={() => {
+                      addView(post);
+                      navigate("/Readmore", {
+                        state: {
+                          id: post.id,
+                          title: post.title,
+                          description: post.description,
+                          dateTime: post.dataTime,
+                          likes: post.likes,
+                        },
+                      });
+                    }}
+                  >
+                    Read More
+                  </button>
+                  <div></div>
+                </div>
+              );
+            })}
+      </div>
     </div>
   );
 };
