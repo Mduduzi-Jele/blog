@@ -17,7 +17,7 @@ function SignUp() {
       password,
     };
 
-    fetch("http://blog-api-production-f2cd.up.railway.app/user", {
+    fetch("//blog-api-production-f2cd.up.railway.app/user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

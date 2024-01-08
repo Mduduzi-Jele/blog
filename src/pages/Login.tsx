@@ -10,7 +10,7 @@ const Login: React.FC = () => {
   // const { id, setId } = useContext(MyContext);
 
   const handleLogin = () => {
-    fetch(`http://blog-api-production-f2cd.up.railway.app/signin`, {
+    fetch(`//blog-api-production-f2cd.up.railway.app/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

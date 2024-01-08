@@ -40,7 +40,7 @@ const Create: React.FC<MyPostProps> = () => {
       newPost.append('views', 0);
       newPost.append('likes', 0);
 
-      fetch(`http://blog-api-production-f2cd.up.railway.app/user/${userId}/post`, {
+      fetch(`//blog-api-production-f2cd.up.railway.app/user/${userId}/post`, {
         method: "POST",
         body: newPost,
       })

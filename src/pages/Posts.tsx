@@ -21,7 +21,7 @@ const Posts = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`http://blog-api-production-f2cd.up.railway.app/posts`);
+      const response = await fetch(`//blog-api-production-f2cd.up.railway.app/posts`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -52,7 +52,7 @@ const Posts = () => {
     // const userId = sessionStorage.getItem("userId")
     const newPost = { views: post.views + 1 };
 
-    fetch(`http://blog-api-production-f2cd.up.railway.app/view/${post.id}`, {
+    fetch(`//blog-api-production-f2cd.up.railway.app/view/${post.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -140,7 +140,7 @@ const Posts = () => {
               const desc: string = description.join(" ");
               return (
                 <div key={index}>
-                  <img className="mypost__item__image" src={`http://blog-api-production-f2cd.up.railway.app/images/${post.id}`} alt="Uploaded Image" />
+                  <img className="mypost__item__image" src={`//blog-api-production-f2cd.up.railway.app/images/${post.id}`} alt="Uploaded Image" />
                   <p>Title: {post.title}</p>
                   <p>Message: {`${desc}...`}</p>
                   <p>Views: {post.views}</p>

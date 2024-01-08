@@ -28,7 +28,7 @@ const Update: React.FC<MyPostProps> = () => {
       description: sDescription
     };
 
-    fetch(`http://blog-api-production-f2cd.up.railway.app/post/${id}`, {
+    fetch(`//blog-api-production-f2cd.up.railway.app/post/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
