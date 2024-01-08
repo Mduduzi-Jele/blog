@@ -27,7 +27,7 @@ export const MyPost = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/user/${userId}/posts`);
+        const response = await fetch(`http://blog-api-production-f2cd.up.railway.app/user/${userId}/posts`);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -43,7 +43,7 @@ export const MyPost = () => {
   }, [userId]);
 
   const deletePost = (postId, index) => {
-    fetch(`http://localhost:8080/post/${postId}`, {
+    fetch(`http://blog-api-production-f2cd.up.railway.app/post/${postId}`, {
       method: "DELETE",
     })
       .then((response) => {
@@ -70,7 +70,7 @@ export const MyPost = () => {
           <ul className="mypost__list">
             {posts?.map((post, index) => (
               <li className="mypost__item" key={index}>
-                <img className="mypost__item__image" src={`http://localhost:8080/images/${post.id}`} alt="Uploaded Image" />
+                <img className="mypost__item__image" src={`http://blog-api-production-f2cd.up.railway.app/images/${post.id}`} alt="Uploaded Image" />
                 <h3>{post.title}</h3>
                 <p>{post.description}</p>
                 <div className="mypost__metadata">

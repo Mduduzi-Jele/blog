@@ -17,7 +17,7 @@ function SignUp() {
       password,
     };
 
-    fetch("http://localhost:8080/user", {
+    fetch("http://blog-api-production-f2cd.up.railway.app/user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -23,7 +23,7 @@ const Readmore = () => {
       likes: 0,
     };
 
-    fetch(`http://localhost:8080/post/${id}/comment`, {
+    fetch(`http://blog-api-production-f2cd.up.railway.app/post/${id}/comment`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +50,7 @@ const Readmore = () => {
       likes: likes + 1
     };
 
-    fetch(`http://localhost:8080/like/${id}`, {
+    fetch(`http://blog-api-production-f2cd.up.railway.app/like/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -74,7 +74,7 @@ const Readmore = () => {
 
   return (
     <div>
-      <img className="mypost__item__image" src={`http://localhost:8080/images/${id}`} alt="Uploaded Image" />
+      <img className="mypost__item__image" src={`http://blog-api-production-f2cd.up.railway.app/images/${id}`} alt="Uploaded Image" />
       <h2>{title}</h2>
       <p>{description}</p>
       <p>{dateTime}</p>
