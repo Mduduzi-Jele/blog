@@ -1,6 +1,5 @@
 import Navigation from "./Navigation";
 import Posts from "./Posts";
-import Footer from "./Footer";
 
 export interface Comment {
   name: string;

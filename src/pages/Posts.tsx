@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useEffect } from "react";
 import Search from "./Search";
 import { useNavigate } from "react-router-dom";

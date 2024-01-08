@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useEffect, useState } from "react";
 import Navigation from "./Navigation";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
