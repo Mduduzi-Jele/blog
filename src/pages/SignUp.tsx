@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 
 function SignUp() {
@@ -17,7 +17,7 @@ function SignUp() {
       password,
     };
 
-    fetch("//blog-api-production-f2cd.up.railway.app/user", {
+    fetch("http://localhost:5173/user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,49 +46,67 @@ function SignUp() {
   };
 
   return (
-    <div className="box-container">
-      <div className="header-text">
-        <h1>Sign-Up</h1>
-        <div className="line"></div>
-      </div>
 
-      <div className="form-container">
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            className="text-area"
-            placeholder="Name"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          ></input>{" "}
-          <br />
-          <br />
-          <input
-            type="email"
-            className="text-area"
-            placeholder="Email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          ></input>{" "}
-          <br />
-          <br />
-          <input
-            type="password"
-            className="text-area"
-            placeholder="Password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          ></input>{" "}
-          <br />
-          <br />
-          <button className="btnSignUp">Sign Up</button>
-        </form>
+    <>
+      <div className="relative h-screen flex items-center justify-center w-full ">
+        <div className="relative md:w-1/2 sm:w-full flex items-center justify-center">
+          <div className=" bg-white p-8 shadow rounded-3xl md:w-1/2 sm:full ">
+            <div className="space-x-5 ">
+              
+            </div>
+            <h1>Sign up</h1>
+            <form onSubmit={handleSubmit} className="p-0">
+              <div className="mt-5 w-full">
+                <label
+                  className=" text-sm text-gray-600 pb-1 block"
+                  htmlFor="Name"
+                  >Name
+                  
+                  </label>
+                <input
+                  className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                  type="Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <label
+                  className=" text-sm text-gray-600 pb-1 block"
+                  htmlFor="login"
+                  >E-mail
+                  
+                  </label>
+                <input
+                  className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <label
+                  className=" text-sm text-gray-600 pb-1 block"
+                  htmlFor="password"
+                  >Password</label>
+                <input
+                  className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+        
+          
+            <div className="mt-5">
+              <button
+                className="py-2 px-4 bg-blue text-white w-full  rounded-lg"
+                type="submit">
+               Signup
+              </button>
+            </div>
+            </form>
+           
+          </div>
+        </div>
       </div>
-    </div>
+    </>
+    
   );
 }
 

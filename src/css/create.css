@@ -6,7 +6,7 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: bisque;
+   
   }
   
   form {
@@ -53,10 +53,10 @@
     padding: 10px;
     cursor: pointer;
     font-size: 18px;
-    width: 100px;
+   
   }
   
   button:hover {
-    background-color: #0056b3;
+    /* background-color: #0056b3; */
   }
   

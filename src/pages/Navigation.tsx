@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Navigation = () => {
   const navigate = useNavigate()
   // const {setId} = useContext(MyContext);
-  const signOut = () => {
+  const signOut = () => {Create
     sessionStorage.clear()
     navigate("/")
   }
@@ -19,7 +19,7 @@ const Navigation = () => {
           <Link className="navigation__text" to="/myposts">My Posts</Link>
         </li>
         <li>
-          <Link className="navigation__text" to="/create">Create</Link>
+          <Link className="navigation__text" to="/create"></Link>
         </li>
       </ul>
      <button onClick={() => signOut()}>Signout</button>
