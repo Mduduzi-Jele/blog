@@ -1,5 +1,8 @@
+import { useEffect } from "react";
+import Navbar from "./Navbar";
 import Navigation from "./Navigation";
 import Posts from "./Posts";
+import { useNavigate } from "react-router-dom";
 
 export interface Comment {
   name: string;
@@ -8,9 +11,10 @@ export interface Comment {
 }
 
 const Home = () => {
+  
   return (
     <div>
-      <Navigation />
+      <Navbar />
       <Posts />
     </div>
   );

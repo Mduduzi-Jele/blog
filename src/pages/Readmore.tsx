@@ -1,5 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
+import Navi from "./Navi";
+import Navbar from "./Navbar";
 
 interface Comment {
   dateTime: Date;
@@ -50,7 +52,7 @@ const Readmore = () => {
       likes: likes + 1
     };
 
-    fetch(`//blog-api-production-f2cd.up.railway.app/like/${id}`, {
+    fetch(`http://localhost:8080/like/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -73,38 +75,48 @@ const Readmore = () => {
   };
 
   return (
-    <div>
-      <img className="mypost__item__image" src={`//blog-api-production-f2cd.up.railway.app/images/${id}`} alt="Uploaded Image" />
-      <h2>{title}</h2>
-      <p>{description}</p>
-      <p>{dateTime}</p>
-      <button onClick={() => like(id)}>like</button>
-      <button
-        onClick={() => {
-          if (showComment !== true) {
-            setshowComment(true);
-          } else {
-            setshowComment(false);
-          }
-        }}
-      >
-        Comment
-      </button>
-      {showComment ? (
-        <div>
-          <input
-            value={comment}
-            type="text"
-            onChange={(e) => {
-              setComment(e.target.value);
-            }}
-          />
-          <button onClick={() => saveComment()}>Save</button>
+    <>
+    <Navbar />
+    <div className="flex justify-center items-center">
+      <div className="">
+        <div className="mt-12 p-3 bg-card md:w-30 rounded-lg">
+          <img className="mypost__item__image rounded-lg" src={`http://localhost:8080/images/${id}`} alt="Uploaded Image" />
+          <h2>{title}</h2>
+          <p>{description}</p>
+          <p>{dateTime}</p>
+          <div className="flex gap-4 text-white mt-5">
+            <button className="p-2 bg-background" onClick={() => like(id)}>like</button>
+            <button
+            className="p-2  bg-background"
+              onClick={() => {
+                if (showComment !== true) {
+                  setshowComment(true);
+                } else {
+                  setshowComment(false);
+                }
+              }}
+            >
+              Comment
+            </button>
+          </div>
+          {showComment ? (
+            <div>
+              <input
+                value={comment}
+                type="text"
+                onChange={(e) => {
+                  setComment(e.target.value);
+                }}
+              />
+              <button onClick={() => saveComment()}>Save</button>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
-      ) : (
-        ""
-      )}
+      </div>
     </div>
+    </>
   );
 };
 

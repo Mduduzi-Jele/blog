@@ -21,7 +21,7 @@ const Posts = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`//blog-api-production-f2cd.up.railway.app/posts`);
+      const response = await fetch(`http://localhost:8080/posts`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -52,7 +52,7 @@ const Posts = () => {
     // const userId = sessionStorage.getItem("userId")
     const newPost = { views: post.views + 1 };
 
-    fetch(`//blog-api-production-f2cd.up.railway.app/view/${post.id}`, {
+    fetch(`http://localhost:8080/view/${post.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -118,13 +118,13 @@ const Posts = () => {
   };
 
   return (
-    <div>
-      <div className="filter__search">
+    <div className="ml-[30px] mr-[30px]">
+      <div className="filter__search md:pr-11 justify-center md:justify-between items-center md:display-none">
         <div className="filter">
-          <button onClick={() => {allPosts()}}>All</button>
+          {/* <button onClick={() => {allPosts()}}>All</button>
           <button onClick={() => {weekly(posts)}}>Weekly</button>
           <button onClick={() => {monthly(posts)}}>1 Month</button>
-          <button onClick={() => {threeMonths(posts)}}>3 Months</button>
+          <button onClick={() => {threeMonths(posts)}}>3 Months</button> */}
         </div>
         <Search
           posts={posts}
@@ -132,20 +132,54 @@ const Posts = () => {
           setSearchedPosts={setSearchedPosts}
         />
       </div>
-      <div>
+      <div className="flex flex-col flex-wrap items-center justify-center md:flex-row gap-10 mt-8">
         {search === false
           ? posts?.map((post, index) => {
               let description = post.description.split(" ");
               description = description.slice(0, 15);
               const desc: string = description.join(" ");
               return (
-                <div key={index}>
-                  <img className="mypost__item__image" src={`//blog-api-production-f2cd.up.railway.app/images/${post.id}`} alt="Uploaded Image" />
+                <div className="md:w-30 bg-card p-4 rounded-lg">
+                <div key={index} className="">
+                  <img className="mypost__item__image" src={`http://localhost:8080/images/${post.id}`} alt="Uploaded Image" />
                   <p>Title: {post.title}</p>
                   <p>Message: {`${desc}...`}</p>
                   <p>Views: {post.views}</p>
                   <p>Likes: {post.likes}</p>
                   <p>Time: {post.dataTime.toString()}</p>
+                  <button
+                  className="p-3 bg-background mt-4 text-white"
+                    onClick={() => {
+                      addView(post);
+                      navigate("/Readmore", {
+                        state: {
+                          id: post.id,
+                          title: post.title,
+                          description: post.description,
+                          dateTime: post.dataTime,
+                          likes: post.likes,
+                        },
+                      });
+                    }}
+                  >
+                    Read More
+                  </button>
+                  <div></div>
+                </div>
+                </div>
+              );
+            })
+          : searchedPosts?.map((post, index) => {
+              let description = post.description.split(" ");
+              description = description.slice(0, 15);
+              const desc: string = description.join(" ");
+              return (
+                <div className="flex">
+                <div key={index}>
+                  <p>Title: {post.title}</p>
+                  <p>Message: {`${desc}...`}</p>
+                  <p>Views: {post.views}</p>
+                  <p>Likes: {post.likes}</p>
                   <button
                     onClick={() => {
                       addView(post);
@@ -164,35 +198,6 @@ const Posts = () => {
                   </button>
                   <div></div>
                 </div>
-              );
-            })
-          : searchedPosts?.map((post, index) => {
-              let description = post.description.split(" ");
-              description = description.slice(0, 15);
-              const desc: string = description.join(" ");
-              return (
-                <div key={index}>
-                  <p>Title: {post.title}</p>
-                  <p>Message: {`${desc}...`}</p>
-                  <p>Views: {post.views}</p>
-                  <p>Likes: {post.likes}</p>
-                  <button
-                    onClick={() => {
-                      addView(post);
-                      navigate("/Readmore", {
-                        state: {
-                          id: post.id,
-                          title: post.title,
-                          description: post.description,
-                          dateTime: post.dataTime,
-                          likes: post.likes,
-                        },
-                      });
-                    }}
-                  >
-                    Read More
-                  </button>
-                  <div></div>
                 </div>
               );
             })}

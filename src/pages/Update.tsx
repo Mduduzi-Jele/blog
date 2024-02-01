@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navigation from "./Navigation";
 import { useLocation } from "react-router-dom";
+import Navbar from "./Navbar";
 
 interface MyPostProps {}
 
@@ -28,7 +29,7 @@ const Update: React.FC<MyPostProps> = () => {
       description: sDescription
     };
 
-    fetch(`//blog-api-production-f2cd.up.railway.app/post/${id}`, {
+    fetch(`http://localhost:8080/post/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -57,7 +58,7 @@ const Update: React.FC<MyPostProps> = () => {
 
   return (
     <>
-      <Navigation />
+      <Navbar />
       <div className="create-container">
         <h1>Update Post</h1>
         <form>

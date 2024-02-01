@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navigation from "./Navigation";
+import Navi from "./Navi";
+import Navbar from "./Navbar";
 
 interface MyPostProps {}
 
@@ -20,7 +22,7 @@ const Create: React.FC<MyPostProps> = () => {
   const [dataTime] = useState<Date>(new Date());
   const [selectedFile, setSelectedFile] = useState<Blob>("");
 
-  const userId = sessionStorage.getItem("userId");
+  const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
 
   const handleFileChange = (e) => {
@@ -40,7 +42,7 @@ const Create: React.FC<MyPostProps> = () => {
       newPost.append('views', 0);
       newPost.append('likes', 0);
 
-      fetch(`//blog-api-production-f2cd.up.railway.app/user/${userId}/post`, {
+      fetch(`http://localhost:8080/user/${userId}/post`, {
         method: "POST",
         body: newPost,
       })
@@ -61,7 +63,7 @@ const Create: React.FC<MyPostProps> = () => {
       console.log("Data posted successfully!");
       setTitle("");
       setDescription("");
-      navigate("/myposts");
+      navigate("/home");
     } else {
       console.error("No file selected for upload");
     }
@@ -69,10 +71,10 @@ const Create: React.FC<MyPostProps> = () => {
 
   return (
     <>
-      <Navigation />
-      <div className="create-container">
-        <h1>Create Post</h1>
-        <form>
+      <Navbar />
+      <div className="create-container ml-[20px] mr-[20px]">
+        <h1 className="text-2xl mb-12 text-white">Create Post</h1>
+        <form className="bg-card">
           <div>
             <input type="file" onChange={handleFileChange} />
           </div>

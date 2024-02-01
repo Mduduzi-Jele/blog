@@ -1,5 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import { MyPost } from "./pages/MyPost";
@@ -11,25 +11,66 @@ import DisplayComment from "./pages/DisplayComment";
 import Readmore from "./pages/Readmore";
 import Update from "./pages/Update";
 
-
 export const MyContext = createContext({});
 
 function App() {
-  const [id, setId] = useState(0);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check if the user is logged in on component mount
+    const storedUser = localStorage.getItem("userId");
+    if (storedUser) {
+      setLoggedIn(true);
+    }
+  }, []);
+
   return (
-    <MyContext.Provider value={{ id, setId }}>
+    <MyContext.Provider value={{ loggedIn, setLoggedIn }}>
       <Router>
         <Routes>
-        <Route path="/" element={<LandingPage />} />
+          <Route
+            path="/"
+            element={loggedIn ? <Navigate to="/home" /> : <Login />}
+          />
           <Route path="/home" element={<Home />} />
-          <Route path="/create" element={<Create />} />
-          <Route path="/login" element={<Login/>} />
-          <Route path="/myposts" element={< MyPost/>} />
+          <Route
+            path="/create"
+            element={
+              loggedIn ? (
+                <Create />
+              ) : (
+                // UseNavigate hook directly within the component
+                <Navigate to="/" replace={true} />
+              )
+            }
+          />
+          <Route
+            path="/myposts"
+            element={
+              loggedIn ? (
+                <MyPost />
+              ) : (
+                // UseNavigate hook directly within the component
+                <Navigate to="/" replace={true} />
+              )
+            }
+          />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="displaycomment" element ={<DisplayComment />} />
-          <Route path="footer" element = {<Footer />}/>
-          <Route path="/Readmore" element={<Readmore/>}/>
-          <Route path="/edit" element={<Update />}/>
+          <Route
+            path="/displaycomment"
+            element={
+              loggedIn ? (
+                <DisplayComment />
+              ) : (
+                // UseNavigate hook directly within the component
+                <Navigate to="/" replace={true} />
+              )
+            }
+          />
+          <Route path="/footer" element={<Footer />} />
+          <Route path="/readmore" element={<Readmore />} />
+          <Route path="/edit" element={<Update />} />
+          {/* Add other routes as needed */}
         </Routes>
       </Router>
     </MyContext.Provider>
