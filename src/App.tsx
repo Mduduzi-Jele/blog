@@ -5,7 +5,6 @@ import Login from "./pages/Login";
 import { MyPost } from "./pages/MyPost";
 import Create from "./pages/Create";
 import SignUp from "./pages/SignUp";
-import LandingPage from "./pages/LandingPage";
 import Footer from "./pages/Footer";
 import DisplayComment from "./pages/DisplayComment";
 import Readmore from "./pages/Readmore";

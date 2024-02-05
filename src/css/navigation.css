@@ -1,3 +1,7 @@
 .show {
     display: block;
-  }
+}
+
+.navi-open {
+  z-index: 999;
+}

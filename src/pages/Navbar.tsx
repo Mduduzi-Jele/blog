@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import '../css/navigation.css'
 
 const Navbar = () => {
   const navigate = useNavigate()
@@ -16,11 +17,11 @@ const Navbar = () => {
     return (
       <>
        
-        <div className="relative bg-white">
+        <div className="bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="flex justify-between items-center py-6 md:justify-start md:space-x-10">
               <div className="flex justify-start lg:w-0 lg:flex-1">
-                <a href="#">
+                <a href="/home">
                   <span className="sr-only">
                     
                   </span>
@@ -85,8 +86,8 @@ const Navbar = () => {
           <div
             className={
               open
-                ? "opacity-100 scale-100 transition ease-out duration-200 absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
-                : "opacity-0 scale-95 absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+                ? "navi-open opacity-100 scale-100 transition ease-out duration-200 absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+                : " opacity-0 scale-95 absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
             }
           >
             <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
@@ -129,7 +130,7 @@ const Navbar = () => {
                   
                 </div>
               </div>
-              <div className="py-6 px-5 space-y-6">
+              <div className=" py-6 px-5 space-y-6">
                 <div className="grid grid-cols- gap-y-4 gap-x-8">
                   <Link
                     to="/home"
