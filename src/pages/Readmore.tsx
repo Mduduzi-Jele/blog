@@ -25,7 +25,7 @@ const Readmore = () => {
       likes: 0,
     };
 
-    fetch(`//blog-api-production-f2cd.up.railway.app/post/${id}/comment`, {
+    fetch(`http://localhost:8080/post/${id}/comment`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

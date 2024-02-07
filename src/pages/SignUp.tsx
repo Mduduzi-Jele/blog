@@ -17,7 +17,7 @@ function SignUp() {
       password,
     };
 
-    fetch("http://localhost:5173/user", {
+    fetch("http://localhost:8080/user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

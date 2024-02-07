@@ -96,10 +96,10 @@ const Posts = () => {
     <div className="ml-[30px] mr-[30px]">
       <div className="filter__search md:pr-11 justify-center md:justify-between items-center md:display-none">
         <div className="filter">
-          <button onClick={() => { allPosts() }}>All</button>
-          <button onClick={() => { weekly(posts) }}>Weekly</button>
-          <button onClick={() => { monthly(posts) }}>1 Month</button>
-          <button onClick={() => { threeMonths(posts) }}>3 Months</button>
+          <button className="btn"onClick={() => { allPosts() }}>All Posts</button>
+          <button className="btn"onClick={() => { weekly(posts) }}>Weekly</button>
+          <button className="btn"onClick={() => { monthly(posts) }}>1 Month</button>
+          <button className="btn"onClick={() => { threeMonths(posts) }}>3 Months</button>
         </div>
         <Search
           posts={posts}
