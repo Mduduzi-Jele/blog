@@ -1,0 +1,20 @@
+.commentInput{
+    width:9rem;
+    height: 3rem;
+    border-radius: 5rem;
+    margin: 0%;
+}
+
+.commentbox {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    color: black;
+}
+
+.btn-save {
+    background-color: transparent;
+    border: solid rgb(95, 95, 161);
+    width: 5.5rem;
+    margin-left: 5%;
+}

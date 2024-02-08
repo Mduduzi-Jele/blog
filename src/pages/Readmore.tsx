@@ -1,7 +1,8 @@
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navi from "./Navi";
 import Navbar from "./Navbar";
+import { setuid } from "process";
 
 interface Comment {
   dateTime: Date;
@@ -18,6 +19,26 @@ const Readmore = () => {
 
   const { title, description, id, dateTime, likes } = state;
 
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/post/${id}/comments`);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const comments = await response.json();
+        console.log(comments);
+        setComments(comments);
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
   const saveComment = () => {
     const newComment: Comment = {
       description: comment,
@@ -25,6 +46,10 @@ const Readmore = () => {
       likes: 0,
     };
 
+    if (comment == ""){
+      return "Please enter a comment"
+
+    }else{
     fetch(`http://localhost:8080/post/${id}/comment`, {
       method: "POST",
       headers: {
@@ -45,7 +70,9 @@ const Readmore = () => {
       .catch((error) => {
         console.error("Fetch error", error);
       });
+    }
   };
+
 
   const like = (id: number) => {
     const addLike = {
@@ -80,14 +107,14 @@ const Readmore = () => {
     <div className="flex justify-center items-center">
       <div className="">
         <div className="mt-12 p-3 bg-card md:w-30 rounded-lg">
-          <img className="mypost__item__image rounded-lg" src={`http://localhost:8080/images/${id}`} alt="Uploaded Image" />
+          <img className="mypost__item__image rounded-lg" src={`http://localhost:8080/images/${id}`} 
+          alt="Uploaded Image" />
           <h2>{title}</h2>
           <p>{description}</p>
           <p>{dateTime}</p>
           <div className="flex gap-4 text-white mt-5">
             <button className="p-2 bg-background" onClick={() => like(id)}>like</button>
-            <button
-            className="p-2  bg-background"
+            <button className="p-2  bg-background"
               onClick={() => {
                 if (showComment !== true) {
                   setshowComment(true);
@@ -95,24 +122,34 @@ const Readmore = () => {
                   setshowComment(false);
                 }
               }}
-            >
-              Comment
+            > Comment
             </button>
-          </div>
+        
           {showComment ? (
-            <div>
-              <input
+            <div className="commentbox">
+              <input className="commentInput"
                 value={comment}
                 type="text"
                 onChange={(e) => {
                   setComment(e.target.value);
                 }}
               />
-              <button onClick={() => saveComment()}>Save</button>
+              <button className="btn-save" onClick={() => saveComment()}>Save</button>
             </div>
           ) : (
             ""
           )}
+          </div>
+          <div className="comments-display">
+            {
+              comments.map(comment => (
+                <div>
+                  {comment.dateTime}
+                  {comment.description}
+                </div>
+              ))
+            }            
+          </div>
         </div>
       </div>
     </div>
