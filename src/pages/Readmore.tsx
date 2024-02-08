@@ -144,8 +144,8 @@ const Readmore = () => {
             {
               comments.map(comment => (
                 <div>
-                  {comment.dateTime}
-                  {comment.description}
+                  <p>{comment.dateTime}</p>
+                  <h1>{comment.description}</h1>
                 </div>
               ))
             }            
